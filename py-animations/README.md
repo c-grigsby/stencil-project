@@ -1,12 +1,15 @@
-# Stencil Player API
+# Py Animations
+
+A collections of python scripts for converting a .raw file consisting of stacked matrix timestamps from a 9-point stencil calculation into an animation displaying the stencil calculation results
 
 ## Project Details
 
 - Developed with Python version 3.9 
+- Animation results persisted via .gif or .mp4 
 
-## Getting Started with the .py Files
+## Getting Started
 
-- On MacOS, you will need to install 'ffmpeg'. First install homebrew, then execute in the terminal:
+- To execute these scripts you will need to install the ffmpeg package. To install with homebrew on macOS, execute in the terminal:
 
   ```
   $ brew install ffmpeg
