@@ -19,9 +19,10 @@ mpi-stencil-2d.c: performs a stencil calculation on a matrix using MPI for paral
 #define SWAP_PTR(xnew,xold,xtmp) (xtmp=xnew, xnew=xold, xold=xtmp)
 // @helpers
 double **stencil_2D_MPI(double **arr2D, double **new_arr2D, int row, int column);
+void run_serial_version(int num_iterations, char *input_file_name, char *output_file_name,  char *summary_file_name, char *raw_file_name, int debug_level);
 void Usage(char *prog_name);
 
-// main program
+
 int main(int argc, char *argv[]) {
   char *input_file_name, *output_file_name, *raw_file_name, *summary_file_name;
   double elapsed_total_time, elapsed_compute_time, elapsed_other_time;
@@ -52,6 +53,12 @@ int main(int argc, char *argv[]) {
   output_file_name = argv[3];
   debug_level = atoi(argv[4]);
 
+  if (num_processes == 1) {
+    run_serial_version(num_iterations, input_file_name, output_file_name, summary_file_name, raw_file_name, debug_level);
+    MPI_Finalize();
+    return 0;
+  }
+
   if (debug_level == 1 && process_id == 0) {
     printf("input_file: %s, output_file: %s, debug_level: %d\n\n", input_file_name, output_file_name, debug_level);
   }
@@ -80,7 +87,9 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < num_iterations; i++) {
     // Process zero executes performance calculations
     if (process_id == 0) { GET_TIME(compute_time_start); }
+
     stencil_2D_MPI(arr2D, new_arr2D, rows, columns);
+
     if (process_id == 0) { 
       GET_TIME(compute_time_end); 
       elapsed_compute_time += compute_time_end - compute_time_start;
@@ -165,3 +174,81 @@ void Usage(char *prog_name) {
   MPI_Finalize();
   exit(EXIT_FAILURE);
 } 
+
+// @helper run_serial_version: executes a serial version of application
+void run_serial_version(int num_iterations, char *input_file_name, char *output_file_name,  char *summary_file_name, char *raw_file_name, int debug_level) {
+  double total_time_start, total_time_end, compute_time_start, compute_time_end;
+  GET_TIME(total_time_start);
+
+  // Get initial 2DArray rows & columns from .dat file
+  int *arr = readRowsAndColumns(input_file_name);
+  int rows = arr[0];
+  int columns = arr[1];
+
+  // Get initial 2DArray from .dat file
+  double **arr2D;
+  arr2D = read2DArray(input_file_name);
+
+  // Create a second 2DArray for computations
+  double **new_arr2D;
+  new_arr2D = read2DArray(input_file_name);
+
+  if (raw_file_name != NULL) {
+    // Write initial data to raw file
+    write2DArray_NoMeta(raw_file_name, rows, columns, (double **)arr2D);
+  }
+
+  GET_TIME(compute_time_start);
+  // @Compute 9-Point Stencil
+  int loop_count = 0;
+  while (loop_count < num_iterations) {
+    // Perform stencil calculations
+    int i, j;
+    for (i = 1; i < rows - 1; i++) {
+      for (j = 1; j < columns - 1; j++) {
+        new_arr2D[i][j] = (arr2D[i - 1][j - 1] + arr2D[i - 1][j] + arr2D[i - 1][j + 1] +
+                           arr2D[i][j + 1] + arr2D[i + 1][j + 1] + arr2D[i + 1][j] +
+                           arr2D[i + 1][j - 1] + arr2D[i][j - 1] + arr2D[i][j]) /
+                          9.0;
+      }
+    }
+    // Swap pointers to the arr's
+    double **temp = new_arr2D;
+    new_arr2D = arr2D;
+    arr2D = temp;
+    // Append data to raw file (if opted)
+    if (raw_file_name != NULL) {
+      appendWrite2DArray(raw_file_name, rows, columns, (double **)arr2D);
+    }
+    // Increment count
+    loop_count++;
+  }
+  GET_TIME(compute_time_end);
+
+  // Write final 2DArray
+  write2DArray(output_file_name, rows, columns, (double **)arr2D);
+
+  // Performace Calculations
+  GET_TIME(total_time_end);
+  double elapsed_total_time = total_time_end - total_time_start;
+  double elapsed_compute_time = compute_time_end - compute_time_start;
+  double elapsed_other_time = elapsed_total_time - elapsed_compute_time;
+
+  // Display
+  if (debug_level == 1 || debug_level == 2) {
+    printf("input_file: %s, output_file: %s, debug_level: %d\n\n", input_file_name, output_file_name, debug_level);
+    printf("rows: %d, columns: %d, iterations: %d, num_processes: 1\n\n", rows, columns, num_iterations);
+    getFileSize(input_file_name);
+    getFileSize(output_file_name);
+    if (raw_file_name != NULL) { getFileSize(raw_file_name); }
+  }
+  printf("\nTotal Elapsed Time: %f seconds\n", elapsed_total_time);
+  printf("Total Compute Time: %f seconds\n", elapsed_compute_time);
+  printf("Other Time:         %f seconds\n\n", elapsed_other_time);
+
+  if (summary_file_name != NULL) {
+    write_stencil_summary_data(summary_file_name, elapsed_total_time, elapsed_compute_time, 1, rows, columns, num_iterations);
+  }
+  free(arr2D);
+  free(new_arr2D);
+}
