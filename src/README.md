@@ -2,7 +2,7 @@
 
 Team Members: Christopher Grigsby & Jordan Drakos
 
-## Getting Started with C
+## Getting Started
 
 - To compile
 
@@ -13,7 +13,7 @@ $ make
 - To execute MPI
 
 ```
-$ mpirun -np <num_cores> ./mpi-floyds <in_file> <out_file> <debug level> <summary-file-name (optional)> <all-stacked-file-name.raw (optional)>
+$ mpirun -np <num_cores> ./mpi-stencil-2d <in_file> <out_file> <debug level> <summary-file-name (optional)> <all-stacked-file-name.raw (optional)>
 ```
 
 - To execute with MPI oversubscibe
