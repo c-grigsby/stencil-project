@@ -1,6 +1,6 @@
 # Stencil Project
 
-This repository holds the source code for stencil-project, an experiment in parallel computing utilizing pthreads, MPI, and serial techniques to execute a 9-point stencil calculation upon a two dimensional array under a variety of matrix sizes and calculation iterations
+This repository holds the source code for stencil-project, an experiment in parallel computing utilizing pthreads, MPI, and serial techniques to execute a 9-point stencil calculation upon a two dimensional array under a variety of matrix sizes and calculation iterations.
 
 ## Project Details
 
@@ -12,12 +12,18 @@ This repository holds the source code for stencil-project, an experiment in para
 - Automated Plot Generation: [py-charts](./py-charts/README.md)
 
 ## Stencil Timestamp Animation
- 
+
 - Animation Previews: [.mp4](./matrix-animations-scripts/), [.gif](./matrix-animations-scripts/animation.gif)
 - Desktop App: [matrix-animations-desktop](./matrix-animations-desktop/README.md)
 - Web App: [matrix-animations-web](./matrix-animations-web/README.md)
 - Console Apps: [matrix-animations-console](./matrix-animations-console/README.md)
+- Technologies: React, Express, Tkinter, Matplotlib
 
 ## Deployed Technology
+
 - Web App URL: [www.matrix-animations.com](https://www.matrix-animations.com/)
 
+## Team
+
+- Christopher Grigsby: cwgrigsby@coastal.edu
+- Jordan Drakos: jdrakos@coastal.edu
