@@ -3,7 +3,7 @@
 NUM_ITERATIONS=100                     # number of iterations 
 INITIAL_FILE_NAME=init.dat             # input data file name
 FINAL_FILE_NAME=final.dat              # final state file name
-STACKED_FILE_NAME=all.raw              # stacked matrix timestmaps (unused here)
+STACKED_FILE_NAME=all.raw              # stacked matrix timestamps (unused here)
 SUMMARY_FILE_NAME=summary-serial.txt   # summary data file for py-charts
 
 PATH=$PATH:$(pwd)
