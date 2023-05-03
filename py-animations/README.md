@@ -9,8 +9,15 @@ A collections of python scripts for converting a .raw file consisting of stacked
 
 ## Getting Started
 
-- To execute these scripts you will need to install the ffmpeg package. To install with homebrew on macOS, execute in the terminal:
+- To execute these scripts you will need to install the ffmpeg package. To install ffmpeg with homebrew on macOS, execute in the terminal:
 
   ```
   $ brew install ffmpeg
+  ```
+
+- To install ffmpeg with Ubuntu/Debian:
+  
+ 
+  ```
+  $ sudo apt-get install ffmpeg
   ```
