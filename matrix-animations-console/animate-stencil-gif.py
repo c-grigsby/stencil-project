@@ -39,7 +39,7 @@ try:
     ani = FuncAnimation(fig, update, frames=num_timesteps, interval=50)
 
     # Save the animation as a GIF file
-    ani.save('animation.gif', writer='pillow', fps=50)
+    ani.save(filename[:-4]+'-animation.gif', writer='pillow', fps=50)
 
     # Display the animation
     plt.show()

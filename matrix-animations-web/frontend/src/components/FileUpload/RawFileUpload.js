@@ -31,10 +31,16 @@ const RawFileUpload = ({ setAppInPlay }) => {
   },[setAppInPlay, fileUploaded]);
 
   const fileSelectedHandler = (e) => {
-    const file = e.target.files[0];
+    let file = e.target.files[0];
     if (file) {
-      setFileUploaded(file);
-      setFileName(file.name);
+      // If file size is greater than 25MB
+      if (file.size > 1024 * 1024 * 25) {
+        alert("File size must be less than 25MB.\n");
+        return;
+      } else {
+        setFileUploaded(file);
+        setFileName(file.name);
+      }
       scroll.scrollToBottom({
         smooth: true,
       });
@@ -68,6 +74,7 @@ const RawFileUpload = ({ setAppInPlay }) => {
         formData.append('stacked_raw_file', fileUploaded);
         formData.append('num_rows', numRows);
         formData.append('num_columns', numCols);
+
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_API}/animate-stencil`,
           formData,
@@ -86,7 +93,7 @@ const RawFileUpload = ({ setAppInPlay }) => {
         setMp4Url(createMp4Url);
       }
     } catch (error) {
-      alert("Error with request to backend API, please open the console: ", error);
+      alert("Error with request to the server. Please ensure that you have entered the corect information for rows & columns and timestamp iterations is below 300.", error);
       console.error(error);
     }
     setLoading(false);
@@ -103,7 +110,7 @@ const RawFileUpload = ({ setAppInPlay }) => {
       console.log("here")
       await downloadMP4();
     } else {
-      // Call API to convert .raw to .mp4
+      // Call server to convert .raw to .mp4 animation
       await getAnimation_MP4(fileUploaded);
       await downloadMP4();
     }
@@ -120,7 +127,7 @@ const RawFileUpload = ({ setAppInPlay }) => {
     }
     setError(false);
     if (mp4Url != null) return;
-    // Store .raw file at AWS (these files can get big)
+    // Call server to convert .raw to .mp4 animation
     await getAnimation_MP4(fileUploaded);
     scroll.scrollToBottom({
       smooth: true,
