@@ -79,12 +79,11 @@ class MatrixAnimationsApp(tk.Frame):
         
     def start_animation_functions(self):
         # Create a new thread to run the start_animation() function
-        thread = threading.Thread(target=self.start_animation)
-        thread.start()
+        self.thread = threading.Thread(target=self.start_animation)
+        self.thread.start()
         # Start the progress bar in the main thread
         self.start_progress_bar()
         
-
     def start_animation(self):
       try:
         # Ensure file upload
@@ -101,9 +100,9 @@ class MatrixAnimationsApp(tk.Frame):
         num_rows = int(self.rows_entry.get())
         num_cols = int(self.cols_entry.get())
         if (num_rows <= 0 or num_cols <= 0):
-          self.stop_progress_bar()
-          self.filename_label.config(text="Values must be greater than zero", font=("Helvetica", 10))
-          return
+           self.stop_progress_bar()
+           self.filename_label.config(text="Values must be greater than zero", font=("Helvetica", 10))
+           return
         
         # Calculate # of timesteps based on the size of matrix
         num_timesteps = self.data.size // (num_rows * num_cols)
