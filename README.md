@@ -11,7 +11,7 @@ This repository holds the source code and documentation for stencil-project, an 
 - Performance Data: [Expanse](./summary-data/expanse/), [Local](./summary-data/local/)
 - Automated Plot Generation: [py-charts](./py-charts/README.md)
 - Performance Plots: [MPI plots](./py-charts/plots/mpi/), [Pthread plots](./py-charts/plots/pth/), [Serial plots](./py-charts/plots/serial/)
-- Experiment Report: [Written Report](./written-report/report/), [LaTex](./written-report/LaTex/)
+- Experiment Report: [Written Report](./written-report/report/), [LaTeX](./written-report/LaTex/)
 - Project Presentation: [PowerPoint](./project-presentation/)
 
 ## Stencil Timestamp Animations
