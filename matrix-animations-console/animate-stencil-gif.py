@@ -1,21 +1,30 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 from PIL import Image
+from matplotlib.animation import FuncAnimation
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+import sys
 
 
 try: 
     # Get filename
     filename = input("\n>>> Hello, enter .raw file name for timestamp animation: ")
-
-    # Load the raw data file
-    data = np.fromfile(filename, dtype=np.float64)
+    extension = os.path.splitext(filename)[1]
+    
+    if extension != ".raw":
+        sys.exit("File must be of type .raw")
     
     # Get size of each matrix in the stacked raw data file
     num_rows = int(input("\nThanks, enter the number of matrix rows: "))
     num_cols = int(input("Great, now enter the numbers of matrix columns: "))
+    
+    if (num_rows <= 0 or num_cols <= 0):
+        sys.exit("Error: Rows and Columns must be greater than zero")
 
     print("\n>>> Creating animation... ")
+    
+    # Load the raw data file
+    data = np.fromfile(filename, dtype=np.float64)
 
     # Calculate # of timesteps based on the size of the matrix
     num_timesteps = data.size // (num_rows * num_cols)
