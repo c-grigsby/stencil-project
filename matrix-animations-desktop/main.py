@@ -91,7 +91,7 @@ class MatrixAnimationsApp(tk.Frame):
             self.stop_progress_bar()
             self.filename_label.config(text="Please upload .raw file", font=("Helvetica", 10))
             return
-            
+        
         # Retrieve rows and columns from entry widgets
         if (self.rows_entry.get() == '' or self.cols_entry.get()==''):
             self.stop_progress_bar()
@@ -100,9 +100,9 @@ class MatrixAnimationsApp(tk.Frame):
         num_rows = int(self.rows_entry.get())
         num_cols = int(self.cols_entry.get())
         if (num_rows <= 0 or num_cols <= 0):
-           self.stop_progress_bar()
-           self.filename_label.config(text="Values must be greater than zero", font=("Helvetica", 10))
-           return
+            self.stop_progress_bar()
+            self.filename_label.config(text="Values must be greater than zero", font=("Helvetica", 10))
+            return
         
         # Calculate # of timesteps based on the size of matrix
         num_timesteps = self.data.size // (num_rows * num_cols)
@@ -135,6 +135,7 @@ class MatrixAnimationsApp(tk.Frame):
         
       except Exception as e:
           self.filename_label.config(text="Error: Open console to review", font=("Helvetica", 10))
+          self.stop_progress_bar()
           print("Error: ", e)
         
         
