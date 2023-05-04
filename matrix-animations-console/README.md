@@ -21,3 +21,26 @@ A collections of python scripts for converting a .raw file consisting of stacked
   ```
   $ sudo apt-get install ffmpeg
   ```
+
+## To Run
+
+- Ensure Python is installed locally on your machine (including TKinter)
+- To initialize a virtual enviroment, navigate to the directory of the application in the terminal and execute:
+
+  ##### _Note: "python3" will depend on your version of Python_
+
+  ```
+  $ python3 -m venv venv
+  ```
+
+- Activate the virtual environment:
+
+  ```
+  $ source venv/bin/activate
+  ```
+
+- Install dependencies:
+
+  ```
+  $ pip install -r requirements.txt
+  ```
