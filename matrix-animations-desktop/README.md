@@ -1,6 +1,6 @@
 # Desktop Matrix Animations
 
-Cross-platform desktop app for downloading & viewing .mp4 animations from matrix timestmaps
+Cross-platform desktop app for downloading & viewing .mp4 animations from matrix timestamps
 
 ## Project Details
 
