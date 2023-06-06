@@ -35,9 +35,6 @@ To build the app for production to the `build` folder:
 
 This application utilizes .env to host environment variables. For utilization configure: 
 
-- REACT_APP_AWS_BUCKET_ACCESS_KEY_ID
-- REACT_APP_AWS_BUCKET_SECRET_ACCESS_KEY
-- REACT_APP_AWS_BUCKET_NAME
 - REACT_APP_BACKEND_API
 
 
