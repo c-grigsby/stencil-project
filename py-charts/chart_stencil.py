@@ -34,148 +34,83 @@ try:
   
   # Calculate Overall Speedup 
   speedup_overall_matrix1 = []
+  speedup_overall_matrix2 = []
+  speedup_overall_matrix3 = []
+  speedup_overall_matrix4 = []
+  speedup_overall_matrix5 = []
   for i in range(len(time_overall_matrix1)):
     if (i == 0):
       speedup_overall_matrix1.append(1)
-    else:
-      speedup_overall_matrix1.append(time_overall_matrix1[0] / time_overall_matrix1[i])
-        
-  speedup_overall_matrix2 = []
-  for i in range(len(time_overall_matrix2)):
-    if (i == 0):
       speedup_overall_matrix2.append(1)
-    else:
-      speedup_overall_matrix2.append(time_overall_matrix2[0] / time_overall_matrix2[i])
-        
-  speedup_overall_matrix3 = []
-  for i in range(len(time_overall_matrix3)):
-    if (i == 0): 
       speedup_overall_matrix3.append(1)
-    else:
-      speedup_overall_matrix3.append(time_overall_matrix3[0] / time_overall_matrix3[i])
-        
-  speedup_overall_matrix4 = []
-  for i in range(len(time_overall_matrix4)):
-      if (i == 0):
-        speedup_overall_matrix4.append(1)
-      else:
-        speedup_overall_matrix4.append(time_overall_matrix4[0] / time_overall_matrix4[i])
-        
-  speedup_overall_matrix5 = []
-  for i in range(len(time_overall_matrix5)):
-    if (i == 0):
+      speedup_overall_matrix4.append(1)
       speedup_overall_matrix5.append(1)
     else:
+      speedup_overall_matrix1.append(time_overall_matrix1[0] / time_overall_matrix1[i])
+      speedup_overall_matrix2.append(time_overall_matrix2[0] / time_overall_matrix2[i])
+      speedup_overall_matrix3.append(time_overall_matrix3[0] / time_overall_matrix3[i])
+      speedup_overall_matrix4.append(time_overall_matrix4[0] / time_overall_matrix4[i])
       speedup_overall_matrix5.append(time_overall_matrix5[0] / time_overall_matrix5[i])
 
   # Calculate CPU Speedup 
   cpu_speedup_matrix1 = []
+  cpu_speedup_matrix2 = []
+  cpu_speedup_matrix3 = []
+  cpu_speedup_matrix4 = []
+  cpu_speedup_matrix5 = []
   for i in range(len(cpu_times_matrix1)):
     if (i == 0):
       cpu_speedup_matrix1.append(1)
-    else:
-      cpu_speedup_matrix1.append(cpu_times_matrix1[0] / cpu_times_matrix1[i])
-  
-  cpu_speedup_matrix2 = []
-  for i in range(len(cpu_times_matrix2)):
-    if (i == 0):
       cpu_speedup_matrix2.append(1)
-    else:
-      cpu_speedup_matrix2.append(cpu_times_matrix2[0] / cpu_times_matrix2[i])
-        
-  cpu_speedup_matrix3 = []
-  for i in range(len(cpu_times_matrix3)):
-    if (i == 0):
       cpu_speedup_matrix3.append(1)
-    else:
-      cpu_speedup_matrix3.append(cpu_times_matrix3[0] / cpu_times_matrix3[i])
-        
-  cpu_speedup_matrix4 = []
-  for i in range(len(cpu_times_matrix4)):
-    if (i == 0):
       cpu_speedup_matrix4.append(1)
-    else:
-      cpu_speedup_matrix4.append(cpu_times_matrix4[0] / cpu_times_matrix4[i])
-        
-  cpu_speedup_matrix5 = []
-  for i in range(len(cpu_times_matrix5)):
-    if (i == 0):
       cpu_speedup_matrix5.append(1)
     else:
+      cpu_speedup_matrix1.append(cpu_times_matrix1[0] / cpu_times_matrix1[i])
+      cpu_speedup_matrix2.append(cpu_times_matrix2[0] / cpu_times_matrix2[i])
+      cpu_speedup_matrix3.append(cpu_times_matrix3[0] / cpu_times_matrix3[i])
+      cpu_speedup_matrix4.append(cpu_times_matrix4[0] / cpu_times_matrix4[i])
       cpu_speedup_matrix5.append(cpu_times_matrix5[0] / cpu_times_matrix5[i])
 
   # Calculate Overall Efficiency 
   overall_efficiency_matrix1 = []
+  overall_efficiency_matrix2 = []
+  overall_efficiency_matrix3 = []
+  overall_efficiency_matrix4 = []
+  overall_efficiency_matrix5 = []
   for i in range(len(speedup_overall_matrix1)):
     if (i == 0):
       overall_efficiency_matrix1.append(1)
-    else:
-      overall_efficiency_matrix1.append(speedup_overall_matrix1[i] / process_numbers[i])
-        
-  overall_efficiency_matrix2 = []
-  for i in range(len(speedup_overall_matrix2)):
-    if (i == 0):
       overall_efficiency_matrix2.append(1)
-    else:
-      overall_efficiency_matrix2.append(speedup_overall_matrix2[i] / process_numbers[i])
-        
-  overall_efficiency_matrix3 = []
-  for i in range(len(speedup_overall_matrix3)):
-    if (i == 0):
       overall_efficiency_matrix3.append(1)
-    else:
-      overall_efficiency_matrix3.append(speedup_overall_matrix3[i] / process_numbers[i])
-        
-  overall_efficiency_matrix4 = []
-  for i in range(len(speedup_overall_matrix4)):
-    if (i == 0):
       overall_efficiency_matrix4.append(1)
-    else:
-      overall_efficiency_matrix4.append(speedup_overall_matrix4[i] / process_numbers[i])
-        
-  overall_efficiency_matrix5 = []
-  for i in range(len(speedup_overall_matrix5)):
-    if (i == 0):
       overall_efficiency_matrix5.append(1)
     else:
+      overall_efficiency_matrix1.append(speedup_overall_matrix1[i] / process_numbers[i])
+      overall_efficiency_matrix2.append(speedup_overall_matrix2[i] / process_numbers[i])
+      overall_efficiency_matrix3.append(speedup_overall_matrix3[i] / process_numbers[i])
+      overall_efficiency_matrix4.append(speedup_overall_matrix4[i] / process_numbers[i])
       overall_efficiency_matrix5.append(speedup_overall_matrix5[i] / process_numbers[i])
 
   # Calculate CPU Efficeincy
   cpu_efficiency_matrix1 = []
+  cpu_efficiency_matrix2 = []
+  cpu_efficiency_matrix3 = []
+  cpu_efficiency_matrix4 = []
+  cpu_efficiency_matrix5 = []
   for i in range(len(cpu_speedup_matrix1)):
     if (i == 0):
       cpu_efficiency_matrix1.append(1)
-    else:
-      cpu_efficiency_matrix1.append(cpu_speedup_matrix1[i] / process_numbers[i])
-      
-  cpu_efficiency_matrix2 = []
-  for i in range(len(cpu_speedup_matrix2)):
-    if (i == 0):
       cpu_efficiency_matrix2.append(1)
-    else:
-      cpu_efficiency_matrix2.append(cpu_speedup_matrix2[i] / process_numbers[i])
-      
-  cpu_efficiency_matrix3 = []
-  for i in range(len(cpu_speedup_matrix3)):
-    if (i == 0):
       cpu_efficiency_matrix3.append(1)
-    else:
-      cpu_efficiency_matrix3.append(cpu_speedup_matrix3[i] / process_numbers[i])
-      
-  cpu_efficiency_matrix4 = []
-  for i in range(len(cpu_speedup_matrix4)):
-    if (i == 0):
       cpu_efficiency_matrix4.append(1)
-    else:
-      cpu_efficiency_matrix4.append(cpu_speedup_matrix4[i] / process_numbers[i])
-      
-  cpu_efficiency_matrix5 = []
-  for i in range(len(cpu_speedup_matrix5)):
-    if (i == 0):
       cpu_efficiency_matrix5.append(1)
     else:
+      cpu_efficiency_matrix1.append(cpu_speedup_matrix1[i] / process_numbers[i])
+      cpu_efficiency_matrix2.append(cpu_speedup_matrix2[i] / process_numbers[i])
+      cpu_efficiency_matrix3.append(cpu_speedup_matrix3[i] / process_numbers[i])
+      cpu_efficiency_matrix4.append(cpu_speedup_matrix4[i] / process_numbers[i])
       cpu_efficiency_matrix5.append(cpu_speedup_matrix5[i] / process_numbers[i])
-        
           
   # @Create plots of Time_Overall vs. Num_Processes
   plt.plot(time_overall_matrix1, marker='o')
@@ -466,5 +401,3 @@ except IOError:
     print("Error: An error occurred while reading the file.")
 except Exception as e:
     print("Error: An unexpected error occurred: ", e)
-
-
