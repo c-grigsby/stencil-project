@@ -1,12 +1,14 @@
-/*   MyMPI.h
- team: Christopher Grigsby & Jordan Drakos
- *
- *   Header file for a library of matrix/vector
+/*   
+ *   MyMPI.h -- Header file for a library of matrix/vector
  *   input/output/redistribution functions.
  *
  *   Programmed by Michael J. Quinn
  *
- *   Last modification: 4 September 2002
+ *   Last modification by the author: 4 September 2002
+ * 
+ *   Modified by c-grigsby: April 2023 
+ *   INPUT FUNCTIONS: read_row_striped_matrix_stencil, exchange_row_striped_matix_stencil_data
+ *   OUTPUT FUNCTIONS: write_row_striped_matrix_stencil, write_row_striped_matrix_stencil_noMeta
  */
 
 /************************* MACROS **************************/
@@ -47,7 +49,7 @@ void read_col_striped_matrix(char *, void ***, void **,
                              MPI_Datatype, int *, int *, MPI_Comm);
 int read_row_striped_matrix(char *, void ***, void **,
                             MPI_Datatype, int *, int *, MPI_Comm);
-void read_row_striped_matrix_stencil (char *, void ***, void **, 
+void read_row_striped_matrix_stencil(char *, void ***, void **, 
                         MPI_Datatype, int *, int *, MPI_Comm); 
 void exchange_row_striped_matix_stencil_data(void **, MPI_Datatype,
          int, int, MPI_Comm);                           
@@ -69,6 +71,6 @@ void print_block_vector(void *, MPI_Datatype, int,
 void print_replicated_vector(void *, MPI_Datatype, int,
                              MPI_Comm);
 void write_row_striped_matrix(char *out_file, void **arr_2D, MPI_Datatype dtype, int rows, int cols, MPI_Comm comm);
-void write_row_striped_matrix_stencil (char* out_file, void **arr2D, MPI_Datatype dtype, int rows, int cols, MPI_Comm);
-void write_row_striped_matrix_stencil_noMeta (char* out_file, void **arr2D, MPI_Datatype dtype, int rows, int cols, MPI_Comm comm, int type_of_write);
+void write_row_striped_matrix_stencil(char* out_file, void **arr2D, MPI_Datatype dtype, int rows, int cols, MPI_Comm);
+void write_row_striped_matrix_stencil_noMeta(char* out_file, void **arr2D, MPI_Datatype dtype, int rows, int cols, MPI_Comm comm, int type_of_write);
 
