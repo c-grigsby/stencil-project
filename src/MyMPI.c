@@ -1,12 +1,15 @@
 /*
- team: Christopher Grigsby & Jordan Drakos
- *
  *   MyMPI.c -- A library of matrix/vector
  *   input/output/redistribution functions
  *
  *   Programmed by Michael J. Quinn
  *
- *   Last modification: 4 September 2002
+ *   Last modification by the author: 4 September 2002
+ * 
+ *   Modified by c-grigsby: April 2023 
+ *   INPUT FUNCTIONS: read_row_striped_matrix_stencil, exchange_row_striped_matix_stencil_data
+ *   OUTPUT FUNCTIONS: write_row_striped_matrix_stencil, write_row_striped_matrix_stencil_noMeta
+ *   Note: This library was not written well and is outdated, good luck
  */
 
 #include <stdio.h>
@@ -528,23 +531,22 @@ void read_row_striped_matrix_stencil(
     int *n,             /* OUT - Matrix cols */
     MPI_Comm comm)      /* IN - Communicator */
 {
-   int datum_size; /* Size of matrix element */
-   int i;
-   int id;            /* Process rank */
-   FILE *infileptr;   /* Input file pointer */
-   int local_rows;    /* Rows on this proc */
-   void **lptr;       /* Pointer into 'subs' */
-   int p;             /* Number of processes */
-   void *rptr;        /* Pointer into 'storage' */
-   MPI_Status status; /* Result of receive */
+   int datum_size;      /* Size of matrix element */
+   int i;               /* loop variable */
+   int id;              /* Process rank */
+   FILE *infileptr;     /* Input file pointer */
+   int local_rows;      /* Rows on this proc */
+   void **lptr;         /* Pointer into 'subs' */
+   int p;               /* Number of processes */
+   void *rptr;          /* Pointer into 'storage' */
+   MPI_Status status;   /* Result of receive */
 
    MPI_Comm_size(comm, &p);
    MPI_Comm_rank(comm, &id);
    datum_size = get_size(dtype);
 
-   /* Process p-1 opens file, reads size of matrix,
-      and broadcasts matrix dimensions to other procs */
-
+   // Process p-1 opens file, reads size of matrix, 
+   // and broadcasts matrix dimensions to other processes
    if (id == (p - 1))
    {
       infileptr = fopen(s, "r");
@@ -565,7 +567,7 @@ void read_row_striped_matrix_stencil(
 
    local_rows = BLOCK_SIZE(id, p, (*m));
 
-   /* Additional number of rows needed for the stencil calculations */
+   // Additional number of rows needed for the stencil calculations
    int additional_halo_rows = 0;
    if (id == 0 || id == p - 1) {
       additional_halo_rows = 1;
@@ -574,7 +576,7 @@ void read_row_striped_matrix_stencil(
       additional_halo_rows = 2;
    }
 
-   /* Dynamically allocate matrix */
+   // Dynamically allocate matrix
    *storage = (void *)my_malloc(id, (local_rows + additional_halo_rows) * *n * datum_size);
    *subs = (void **)my_malloc(id, (local_rows + additional_halo_rows) * PTR_SIZE);
 
@@ -586,10 +588,9 @@ void read_row_striped_matrix_stencil(
       rptr += *n * datum_size;
    }
 
-   /* Process p-1 reads blocks of rows from file and
-      sends each block to the correct destination process.
-      The last block it keeps.
-   */
+   // Process p-1 reads blocks of rows from file 
+   // and sends each block to the correct destination process.
+   // The last block it keeps.
    for (int i = 0; i < local_rows + additional_halo_rows; i++)
    {
       for (int j = 0; j < *n; j++)
@@ -642,11 +643,11 @@ void exchange_row_striped_matix_stencil_data(
     MPI_Comm comm)      /* IN - Communicator */
 
 {
-   int id;   /* Process rank */
-   int p;    /* Number of processes */
-   int next; /* Process id + 1 */
-   int prev; /* Process id - 1 */
-   int local_rows;
+   int id;              /* Process rank */
+   int p;               /* Number of processes */
+   int next;            /* Process id + 1 */
+   int prev;            /* Process id - 1 */
+   int local_rows;      /* rows local to the process */
 
    // Gets the comm and rank and assigns them to variable
    MPI_Comm_rank(MPI_COMM_WORLD, &id);
@@ -1237,25 +1238,22 @@ void write_row_striped_matrix(
  */
 void write_row_striped_matrix_stencil(
     char *out_file,      /* IN - output file name */
-    void **a,           /* IN - 2D array */
-    MPI_Datatype dtype, /* IN - Matrix element type */
-    int m,              /* IN - Matrix rows */
-    int n,              /* IN - Matrix cols */
-    MPI_Comm comm)      /* IN - Communicator */
+    void **a,            /* IN - 2D array */
+    MPI_Datatype dtype,  /* IN - Matrix element type */
+    int m,               /* IN - Matrix rows */
+    int n,               /* IN - Matrix cols */
+    MPI_Comm comm)       /* IN - Communicator */
 {
-   MPI_Status status; /* Result of receive */
-   void *bstorage;    /* Elements received from
-                         another process */
-   void **b;          /* 2D array indexing into
-                         'bstorage' */
-   int datum_size;    /* Bytes per element */
-   int i;
-   int id;             /* Process rank */
-   int local_rows;     /* This proc's rows */
-   int max_block_size; /* Most matrix rows held by
-                          any process */
-   int prompt;         /* Dummy variable */
-   int p;              /* Number of processes */
+   MPI_Status status;    /* Result of receive */
+   void *bstorage;       /* Elements received from another process */
+   void **b;             /* 2D array indexing into 'bstorage' */
+   int datum_size;       /* Bytes per element */
+   int i;                /* Loop variable */
+   int id;               /* Process rank */
+   int local_rows;       /* This proc's rows */
+   int max_block_size;   /* Most matrix rows held by any process */
+   int prompt;           /* Dummy variable */
+   int p;                /* Number of processes */
    int total_halo_rows = 0;
    int additional_stencil_rows = 0;
    MPI_Comm_rank(comm, &id);
@@ -1345,19 +1343,16 @@ void write_row_striped_matrix_stencil_noMeta(
     int type_of_write    /* IN - 1 = 'wb', 2 = 'ab'*/ 
     )  
 {
-   MPI_Status status; /* Result of receive */
-   void *bstorage;    /* Elements received from
-                         another process */
-   void **b;          /* 2D array indexing into
-                         'bstorage' */
-   int datum_size;    /* Bytes per element */
-   int i;
-   int id;             /* Process rank */
-   int local_rows;     /* This proc's rows */
-   int max_block_size; /* Most matrix rows held by
-                          any process */
-   int prompt;         /* Dummy variable */
-   int p;              /* Number of processes */
+   MPI_Status status;    /* Result of receive */
+   void *bstorage;       /* Elements received from another process */
+   void **b;             /* 2D array indexing into 'bstorage' */
+   int datum_size;       /* Bytes per element */
+   int i;                /* Loop variable */
+   int id;               /* Process rank */
+   int local_rows;       /* This proc's rows */
+   int max_block_size;   /* Most matrix rows held by any process */
+   int prompt;           /* Dummy variable */
+   int p;                /* Number of processes */
    int total_halo_rows = 0;
    int additional_stencil_rows = 0;
    MPI_Comm_rank(comm, &id);
